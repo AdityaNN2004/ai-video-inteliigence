@@ -6,6 +6,12 @@ from pathlib import Path
 from app.services.video_processor import get_video_metadata
 from app.schemas.video import VideoResponse
 
+from sqlalchemy.orm import Session
+from fastapi import Depends
+
+from app.database import get_db
+from app.models.video import Video
+
 router = APIRouter()
 
 CURR_DIR = Path(__file__).resolve().parent
@@ -19,7 +25,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 # print(f"upload dir:{UPLOAD_DIR}")
 
 @router.post("/api/videos/upload")
-async def upload_video_file(file:UploadFile = File(...))->VideoResponse:
+async def upload_video_file(file: UploadFile = File(...),db: Session = Depends(get_db)) -> VideoResponse:
     file_extension = Path(file.filename).suffix.lower()
     if file_extension not in ALLOWED_EXTENSIONS:
         raise HTTPException(
@@ -38,13 +44,36 @@ async def upload_video_file(file:UploadFile = File(...))->VideoResponse:
                 status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail=f"Metadata extraction failed while processing {file.filename}"
             )
-        
+        video = Video(
+                        id=video_id,
+                        filename=file.filename,
+
+                        duration=metadata["duration"],
+                        width=metadata["width"],
+                        height=metadata["height"],
+                        fps=metadata["fps"],
+
+                        video_codec=metadata["video_codec"],
+                        video_bitrate=metadata["video_bitrate"],
+
+                        has_audio=metadata["has_audio"],
+
+                        audio_codec=metadata["audio_codec"],
+                        audio_sample_rate=metadata["audio_sample_rate"],
+                        audio_channels=metadata["audio_channels"],
+
+                        status="uploaded"
+                    )
+
+        db.add(video)
+        db.commit()
+        db.refresh(video)
         return VideoResponse(
-                video_id= str(video_id),
-                filename=file.filename,
-                status="uploaded",
-                metadata=metadata
-            )
+            video_id=str(video.id),
+            filename=video.filename,
+            status=video.status,
+            metadata=metadata
+        )
     except HTTPException :
         raise
     except Exception as e:
@@ -54,3 +83,7 @@ async def upload_video_file(file:UploadFile = File(...))->VideoResponse:
         )
     finally:
         await file.close()
+        
+# @router.get("/api/videos/{video_id}")
+# async def get_video_by_id(video_id:uuid.uuid4):
+    

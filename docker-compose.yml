@@ -1,0 +1,14 @@
+services:
+  database:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_DB=ai_video_intelligence
+      - POSTGRES_PASSWORD=mypassword          # not used because trust overrides
+      # - POSTGRES_HOST_AUTH_METHOD=trust    # <-- add this
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  db-data:

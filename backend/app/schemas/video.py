@@ -6,7 +6,7 @@ class VideoMetadata(BaseModel):
     height : int
     fps : float
     video_codec: str
-    video_bitrate: int
+    video_bitrate: int | None
     has_audio: bool
     audio_codec: str | None
     audio_sample_rate: int | None
