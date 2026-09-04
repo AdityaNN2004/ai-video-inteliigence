@@ -17,7 +17,7 @@ from app.database import get_db
 from app.models.video import Video
 from app.services.search import semantic_search
 from sqlalchemy import or_
-
+from app.services.time_utils import format_timestamp
 router = APIRouter()
 
 CURR_DIR = Path(__file__).resolve().parent
@@ -167,16 +167,22 @@ async def semantic_video_search(
     return {
         "query": query,
         "results": [
-    {
-        "video_id": str(video.id),
-        "filename": video.filename,
-        "start_time": segment.start_time,
-        "end_time": segment.end_time,
-        "similarity": round(float(similarity), 4),
-        "text": segment.text
-    }
-    for segment, video, similarity in results
-]
+            {
+                "video_id": str(video.id),
+                "filename": video.filename,
+
+                "start_time": segment.start_time,
+                "end_time": segment.end_time,
+
+                "start_timestamp": format_timestamp(segment.start_time),
+                "end_timestamp": format_timestamp(segment.end_time),
+
+                "similarity": round(float(similarity), 4),
+
+                "text": segment.text
+            }
+            for segment, video, similarity in results
+        ]
     }
 @router.get("/api/videos/{video_id}/transcript")
 async def get_video_transcript(
