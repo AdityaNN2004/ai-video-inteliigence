@@ -10,10 +10,11 @@ from app.schemas.video import VideoDetailResponse
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import Depends
+from fastapi.responses import FileResponse
 
 from app.models.transcript_segment import TranscriptSegment
 from app.services.video_processing import process_video
-from app.database import get_db
+from app.database import get_db,SessionLocal
 from app.models.video import Video
 from app.services.search import semantic_search
 from sqlalchemy import or_
@@ -170,7 +171,7 @@ async def semantic_video_search(
             {
                 "video_id": str(video.id),
                 "filename": video.filename,
-
+                "video_url": f"/api/videos/{video.id}/file",
                 "start_time": segment.start_time,
                 "end_time": segment.end_time,
 
@@ -352,5 +353,37 @@ async def get_video_details(
             "audio_codec": video.audio_codec,
             "audio_sample_rate": video.audio_sample_rate,
             "audio_channels": video.audio_channels,
+        }
+    )
+@router.get("/api/videos/{video_id}/file")
+async def get_video_file(
+    video_id: uuid.UUID
+):
+    with SessionLocal() as db:
+        video = db.get(Video, video_id)
+
+        if video is None or video.is_deleted:
+            raise HTTPException(
+                status_code=404,
+                detail="Video not found"
+            )
+
+        matching_files = list(UPLOAD_DIR.glob(f"{video_id}.*"))
+
+        if not matching_files:
+            raise HTTPException(
+                status_code=404,
+                detail="Video file not found"
+            )
+
+        video_path = matching_files[0]
+        filename = video.filename
+
+    # DB connection is now closed before video streaming starts
+    return FileResponse(
+        path=video_path,
+        media_type="video/mp4",
+        headers={
+            "Content-Disposition": "inline"
         }
     )
