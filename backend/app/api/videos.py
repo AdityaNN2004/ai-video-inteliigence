@@ -15,6 +15,8 @@ from app.models.transcript_segment import TranscriptSegment
 from app.services.video_processing import process_video
 from app.database import get_db
 from app.models.video import Video
+from app.services.search import semantic_search
+from sqlalchemy import or_
 
 router = APIRouter()
 
@@ -92,6 +94,90 @@ async def upload_video_file(background_tasks: BackgroundTasks,file: UploadFile =
         )
     finally:
         await file.close()
+@router.get("/api/videos/search")
+async def search_videos(
+    q: str,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100),
+    db: Session = Depends(get_db)
+):
+    query = q.strip()
+
+    if not query:
+        raise HTTPException(
+            status_code=400,
+            detail="Search query cannot be empty"
+        )
+
+    base_query = (
+        db.query(TranscriptSegment, Video)
+        .join(Video, TranscriptSegment.video_id == Video.id)
+        .filter(
+            Video.is_deleted == False,
+            TranscriptSegment.text.ilike(f"%{query}%")
+        )
+    )
+
+    total = base_query.count()
+
+    results = (
+        base_query
+        .order_by(TranscriptSegment.start_time)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+    return {
+        "query": query,
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+        "results": [
+            {
+                "video_id": str(video.id),
+                "filename": video.filename,
+                "start_time": segment.start_time,
+                "end_time": segment.end_time,
+                "text": segment.text
+            }
+            for segment, video in results
+        ]
+    }
+@router.get("/api/videos/semantic-search")
+async def semantic_video_search(
+    q: str,
+    limit: int = Query(10, ge=1, le=50),
+    db: Session = Depends(get_db)
+):
+    query = q.strip()
+
+    if not query:
+        raise HTTPException(
+            status_code=400,
+            detail="Search query cannot be empty"
+        )
+
+    results = semantic_search(
+        query=query,
+        db=db,
+        limit=limit
+    )
+
+    return {
+        "query": query,
+        "results": [
+    {
+        "video_id": str(video.id),
+        "filename": video.filename,
+        "start_time": segment.start_time,
+        "end_time": segment.end_time,
+        "similarity": round(float(similarity), 4),
+        "text": segment.text
+    }
+    for segment, video, similarity in results
+]
+    }
 @router.get("/api/videos/{video_id}/transcript")
 async def get_video_transcript(
     video_id: uuid.UUID,

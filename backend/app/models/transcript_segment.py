@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Float, Integer, Text, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
-import uuid
+from pgvector.sqlalchemy import Vector
 
 from app.database import Base
 
@@ -20,3 +20,5 @@ class TranscriptSegment(Base):
     start_time = Column(Float, nullable=False)
     end_time = Column(Float, nullable=False)
     text = Column(Text, nullable=False)
+
+    embedding = Column(Vector(384), nullable=True)

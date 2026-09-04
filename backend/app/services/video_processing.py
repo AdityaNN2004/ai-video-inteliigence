@@ -6,11 +6,9 @@ from app.models.video import Video
 from app.services.audio_processor import extract_audio
 from app.services.transcription import transcribe_audio
 from app.models.transcript_segment import TranscriptSegment
+from app.services.embedding import generate_embedding
 
-def process_video(
-    video_id,
-    video_path: Path
-) -> None:
+def process_video(video_id,video_path: Path) -> None:
     """
     Process a video in the background.
 
@@ -54,14 +52,22 @@ def process_video(
         video.transcript = result["text"]
         video.language = result["language"]
         for segment in result["segments"]:
+            text = segment["text"].strip()
+
+            if not text:
+                continue
+
+            embedding = generate_embedding(text)
+
             transcript_segment = TranscriptSegment(
                 video_id=video.id,
                 start_time=segment["start"],
                 end_time=segment["end"],
-                text=segment["text"].strip()
+                text=text,
+                embedding=embedding
             )
 
-        db.add(transcript_segment)
+            db.add(transcript_segment)
         
         video.processed_at = datetime.now()
 
