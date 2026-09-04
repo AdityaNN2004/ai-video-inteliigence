@@ -3,148 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Video Intelligence</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            max-width: 1000px;
-            margin: 40px auto;
+            background: #0f1115;
+            color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #9ca3af;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #1b1e24;
+            color: white;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #1d4ed8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .player-section,
+        .results-section {
+            background: #171a20;
+            border: 1px solid #292d35;
+            border-radius: 12px;
             padding: 20px;
         }
 
-        input {
-            width: 70%;
-            padding: 12px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 15px;
         }
 
         video {
             width: 100%;
-            margin-top: 30px;
+            border-radius: 8px;
+            background: black;
+        }
+
+        .current-video {
+            margin-top: 15px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        #results {
+            max-height: 600px;
+            overflow-y: auto;
         }
 
         .result {
             padding: 15px;
-            margin-top: 15px;
-            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            border: 1px solid #30343c;
+            border-radius: 8px;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .result:hover {
-            background: #f5f5f5;
+            border-color: #2563eb;
+            background: #1d2129;
+        }
+
+        .result.active {
+            border-color: #2563eb;
+            background: #1d2a44;
         }
 
         .timestamp {
+            color: #60a5fa;
             font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .result-text {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .filename {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .similarity {
+            margin-top: 8px;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .status {
+            color: #9ca3af;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h1>AI Video Intelligence</h1>
+<div class="container">
 
-    <input
-        id="searchInput"
-        type="text"
-        placeholder="Search your videos..."
-    >
+    <header>
+        <h1>🎥 AI Video Intelligence</h1>
+        <div class="subtitle">
+            Search your videos using natural language
+        </div>
+    </header>
 
-    <button onclick="searchVideos()">Search</button>
+    <div class="search-box">
 
-    <div id="results"></div>
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="e.g. you will be the rest"
+        >
 
-    <video id="videoPlayer" controls></video>
+        <button onclick="searchVideos()">
+            🔍 Search
+        </button>
 
-    <script>
+    </div>
 
-        const API_BASE_URL = "http://localhost:8000";
+    <div class="content">
 
-        async function searchVideos() {
+        <!-- Video Player -->
 
-            const query = document.getElementById("searchInput").value.trim();
+        <section class="player-section">
 
-            if (!query) {
-                return;
-            }
+            <h2 class="section-title">
+                Video Player
+            </h2>
 
-            const response = await fetch(
-                `${API_BASE_URL}/api/videos/semantic-search?q=${encodeURIComponent(query)}`
-            );
+            <video
+                id="videoPlayer"
+                controls
+            ></video>
 
-            const data = await response.json();
+            <div
+                id="currentVideo"
+                class="current-video"
+            >
+                Select a search result to play the video.
+            </div>
 
-            displayResults(data.results);
+        </section>
+
+
+        <!-- Search Results -->
+
+        <section class="results-section">
+
+            <h2 class="section-title">
+                Search Results
+            </h2>
+
+            <div
+                id="status"
+                class="status"
+            ></div>
+
+            <div id="results"></div>
+
+        </section>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const API_BASE_URL = "http://localhost:8000";
+
+const videoPlayer = document.getElementById("videoPlayer");
+const resultsContainer = document.getElementById("results");
+const statusElement = document.getElementById("status");
+const currentVideoElement = document.getElementById("currentVideo");
+
+
+async function searchVideos() {
+
+    const query = document
+        .getElementById("searchInput")
+        .value
+        .trim();
+
+    if (!query) {
+        return;
+    }
+
+    statusElement.textContent = "Searching...";
+    resultsContainer.innerHTML = "";
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos/semantic-search?q=${encodeURIComponent(query)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Search request failed");
         }
 
+        const data = await response.json();
 
-        function displayResults(results) {
+        displayResults(data.results);
 
-            const resultsContainer = document.getElementById("results");
+        statusElement.textContent =
+            `${data.results.length} result(s) found`;
 
-            resultsContainer.innerHTML = "";
+    } catch (error) {
 
-            if (results.length === 0) {
-                resultsContainer.innerHTML = "<p>No results found.</p>";
-                return;
-            }
+        console.error(error);
 
-            results.forEach(result => {
+        statusElement.textContent =
+            "Failed to search videos.";
 
-                const resultElement = document.createElement("div");
+    }
+}
 
-                resultElement.className = "result";
 
-                resultElement.innerHTML = `
-                    <div class="timestamp">
-                        ${result.start_timestamp} → ${result.end_timestamp}
-                    </div>
+function displayResults(results) {
 
-                    <div>
-                        ${result.text}
-                    </div>
+    resultsContainer.innerHTML = "";
 
-                    <small>
-                        ${result.filename}
-                    </small>
-                `;
+    if (results.length === 0) {
 
-                resultElement.onclick = () => {
-                    playAtTimestamp(result);
-                };
+        resultsContainer.innerHTML =
+            "<p>No results found.</p>";
 
-                resultsContainer.appendChild(resultElement);
-            });
+        return;
+    }
+
+    results.forEach((result, index) => {
+
+        const resultElement =
+            document.createElement("div");
+
+        resultElement.className = "result";
+
+        resultElement.innerHTML = `
+
+            <div class="timestamp">
+                ${result.start_timestamp}
+                →
+                ${result.end_timestamp}
+            </div>
+
+            <div class="result-text">
+                ${result.text}
+            </div>
+
+            <div class="filename">
+                ${result.filename}
+            </div>
+
+            <div class="similarity">
+                Similarity:
+                ${(result.similarity * 100).toFixed(1)}%
+            </div>
+        `;
+
+        resultElement.onclick = () => {
+
+            document
+                .querySelectorAll(".result")
+                .forEach(element =>
+                    element.classList.remove("active")
+                );
+
+            resultElement.classList.add("active");
+
+            playAtTimestamp(result);
+        };
+
+        resultsContainer.appendChild(resultElement);
+    });
+}
+
+
+function playAtTimestamp(result) {
+
+    videoPlayer.src =
+        API_BASE_URL + result.video_url;
+
+    currentVideoElement.textContent =
+        `${result.filename} — ${result.start_timestamp}`;
+
+    videoPlayer.addEventListener(
+        "loadedmetadata",
+        function () {
+
+            videoPlayer.currentTime =
+                result.start_time;
+
+            videoPlayer.play();
+
+        },
+        { once: true }
+    );
+}
+
+
+document
+    .getElementById("searchInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            searchVideos();
         }
 
+    });
 
-        function playAtTimestamp(result) {
-
-            const videoPlayer = document.getElementById("videoPlayer");
-
-            videoPlayer.src = API_BASE_URL + result.video_url;
-
-            videoPlayer.addEventListener(
-                "loadedmetadata",
-                function () {
-
-                    videoPlayer.currentTime = result.start_time;
-
-                    videoPlayer.play();
-
-                },
-                { once: true }
-            );
-        }
-
-    </script>
+</script>
 
 </body>
 </html>
