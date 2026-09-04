@@ -1,7 +1,8 @@
-from sqlalchemy import Column,String,Float,Integer,Boolean
+from sqlalchemy import Column,String,Float,Integer,Boolean,Text
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-
+from sqlalchemy import DateTime
+from datetime import datetime
 from app.database import Base
 
 class Video(Base):
@@ -27,3 +28,10 @@ class Video(Base):
     audio_channels = Column(Integer, nullable=True)
 
     status = Column(String, nullable=False, default="uploaded")
+    
+    transcript = Column(Text, nullable=True)
+    language = Column(String, nullable=True)
+    processed_at = Column(DateTime, nullable=True) 
+
+    is_deleted = Column(Boolean, nullable=False, default=False)
+    deleted_at = Column(DateTime, nullable=True)

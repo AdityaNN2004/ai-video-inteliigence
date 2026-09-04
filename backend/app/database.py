@@ -30,8 +30,9 @@ def verify_connection():
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
             print("🚀 Successfully connected to the Docker Postgres database!")
-    except OperationalError:
-        print("❌ Database connection failed. Is your Docker container running?")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
+
 
 if __name__ == "__main__":
     print("URL Loaded: ", DB_URL)
