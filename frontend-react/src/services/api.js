@@ -7,20 +7,23 @@ async function request(endpoint, options = {}) {
     );
 
     if (!response.ok) {
-        let message = "API request failed";
+    let message = "API request failed";
 
-        try {
-            const data = await response.json();
+    try {
+        const data = await response.json();
 
-            if (data.detail) {
-                message = data.detail;
-            }
-        } catch {
-            // Response was not JSON
+        if (data.detail) {
+            message =
+                typeof data.detail === "string"
+                    ? data.detail
+                    : JSON.stringify(data.detail);
         }
-
-        throw new Error(message);
+    } catch {
+        // Response was not JSON
     }
+
+    throw new Error(message);
+}
 
     return response.json();
 }
@@ -45,7 +48,7 @@ export async function getTranscript(videoId) {
 
 export async function semanticSearch(query, limit = 10) {
     return request(
-        `/api/videos/semantic-search?query=${encodeURIComponent(query)}&limit=${limit}`
+        `/api/videos/semantic-search?q=${encodeURIComponent(query)}&limit=${limit}`
     );
 }
 

@@ -47,8 +47,7 @@ function SemanticSearch({ onResultSelect }) {
                 trimmedQuery,
                 10
             );
-
-            setResults(data);
+            setResults(data.results || []);
 
         } catch (error) {
 
@@ -65,6 +64,7 @@ function SemanticSearch({ onResultSelect }) {
         } finally {
 
             setLoading(false);
+
         }
     }
 
@@ -95,7 +95,9 @@ function SemanticSearch({ onResultSelect }) {
                     type="submit"
                     disabled={loading}
                 >
-                    {loading ? "Searching..." : "Search"}
+                    {loading
+                        ? "Searching..."
+                        : "Search"}
                 </button>
 
             </form>
@@ -119,6 +121,7 @@ function SemanticSearch({ onResultSelect }) {
 
 
             {results.length > 0 && (
+
                 <div className="search-results">
 
                     {results.map((result, index) => (
