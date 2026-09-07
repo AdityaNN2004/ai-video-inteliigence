@@ -6,11 +6,14 @@ import uuid
 from pathlib import Path
 from app.services.video_processor import get_video_metadata
 from app.schemas.video import VideoResponse
-from app.schemas.video import VideoDetailResponse
+from app.schemas.video import VideoDetailResponse,VideoQuestionRequest,VideoQuestionResponse
+from app.schemas.video import VideoChapter
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from fastapi.responses import FileResponse
+
+from app.services.qa import answer_video_question
 
 from app.models.transcript_segment import TranscriptSegment
 from app.services.video_processing import process_video
@@ -149,6 +152,7 @@ async def search_videos(
 async def semantic_video_search(
     q: str,
     limit: int = Query(10, ge=1, le=50),
+    threshold: float = Query(0.35, ge=0.0, le=1.0),
     db: Session = Depends(get_db)
 ):
     query = q.strip()
@@ -162,7 +166,8 @@ async def semantic_video_search(
     results = semantic_search(
         query=query,
         db=db,
-        limit=limit
+        limit=limit,
+        similarity_threshold=threshold
     )
 
     return {
@@ -332,29 +337,36 @@ async def get_video_details(
         )
 
     return VideoDetailResponse(
-        video_id=str(video.id),
-        filename=video.filename,
-        status=video.status,
-        language=video.language,
-        transcript=video.transcript,
-        processed_at=(
-            video.processed_at.isoformat()
-            if video.processed_at
-            else None
-        ),
-        metadata={
-            "duration": video.duration,
-            "width": video.width,
-            "height": video.height,
-            "fps": video.fps,
-            "video_codec": video.video_codec,
-            "video_bitrate": video.video_bitrate,
-            "has_audio": video.has_audio,
-            "audio_codec": video.audio_codec,
-            "audio_sample_rate": video.audio_sample_rate,
-            "audio_channels": video.audio_channels,
-        }
-    )
+    video_id=str(video.id),
+    filename=video.filename,
+    status=video.status,
+    language=video.language,
+    transcript=video.transcript,
+    summary=video.summary,
+    summary_data=video.summary_data,
+    chapters=(
+    video.chapters.get("chapters", [])
+    if video.chapters
+    else []
+),
+    processed_at=(
+        video.processed_at.isoformat()
+        if video.processed_at
+        else None
+    ),
+    metadata={
+        "duration": video.duration,
+        "width": video.width,
+        "height": video.height,
+        "fps": video.fps,
+        "video_codec": video.video_codec,
+        "video_bitrate": video.video_bitrate,
+        "has_audio": video.has_audio,
+        "audio_codec": video.audio_codec,
+        "audio_sample_rate": video.audio_sample_rate,
+        "audio_channels": video.audio_channels
+    }
+)
 @router.get("/api/videos/{video_id}/file")
 async def get_video_file(
     video_id: uuid.UUID
@@ -387,3 +399,57 @@ async def get_video_file(
             "Content-Disposition": "inline"
         }
     )
+
+@router.post(
+    "/api/videos/{video_id}/ask",
+    response_model=VideoQuestionResponse
+)
+async def ask_video_question(
+    video_id: uuid.UUID,
+    request: VideoQuestionRequest,
+    db: Session = Depends(get_db)
+) -> VideoQuestionResponse:
+
+    video = db.get(Video, video_id)
+
+    if video is None or video.is_deleted:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Video with id {video_id} not found"
+        )
+
+    if video.status != "completed":
+        raise HTTPException(
+            status_code=400,
+            detail="Video processing is not completed yet"
+        )
+
+    question = request.question.strip()
+
+    if not question:
+        raise HTTPException(
+            status_code=400,
+            detail="Question cannot be empty"
+        )
+
+    try:
+        result = answer_video_question(
+            video_id=video_id,
+            question=question,
+            db=db
+        )
+
+        return VideoQuestionResponse(
+            video_id=str(video.id),
+            question=question,
+            answer=result["answer"],
+            sources=result["sources"]
+        )
+
+    except Exception as e:
+        print(f"Video Q&A failed: {e}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to answer question"
+        )

@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy import DateTime
 from datetime import datetime
 from app.database import Base
-
+from sqlalchemy.dialects.postgresql import JSONB
 class Video(Base):
     __tablename__ = "videos"
     id = Column(
@@ -30,6 +30,9 @@ class Video(Base):
     status = Column(String, nullable=False, default="uploaded")
     
     transcript = Column(Text, nullable=True)
+    summary = Column(Text, nullable=True)
+    summary_data = Column(JSONB, nullable=True)
+    chapters = Column(JSONB, nullable=True)
     language = Column(String, nullable=True)
     processed_at = Column(DateTime, nullable=True) 
 

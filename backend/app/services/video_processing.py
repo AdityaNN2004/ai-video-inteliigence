@@ -7,7 +7,8 @@ from app.services.audio_processor import extract_audio
 from app.services.transcription import transcribe_audio
 from app.models.transcript_segment import TranscriptSegment
 from app.services.embedding import generate_embedding
-
+from app.services.summarization import generate_video_summary
+from app.services.chapters import generate_video_chapters
 def process_video(video_id,video_path: Path) -> None:
     """
     Process a video in the background.
@@ -47,10 +48,38 @@ def process_video(video_id,video_path: Path) -> None:
 
         # 4. Transcribe
         result = transcribe_audio(audio_path)
-        
-        # 5. Save transcript
-        video.transcript = result["text"]
-        video.language = result["language"]
+    
+        # 5. Save transcript and generate AI summary
+        transcript = result["text"]
+        language = result["language"]
+
+        video.transcript = transcript
+        video.language = language
+
+        summary_data = generate_video_summary(transcript)
+
+        video.summary_data = summary_data
+
+        video.summary = (
+            f"SUMMARY:\n{summary_data['summary']}\n\n"
+            f"KEY POINTS:\n"
+            + "\n".join(
+                f"- {point}"
+                for point in summary_data["key_points"]
+            )
+            + "\n\nIMPORTANT TOPICS:\n"
+            + "\n".join(
+                f"- {topic}"
+                for topic in summary_data["topics"]
+            )
+        )
+        # Generate AI video chapters
+        chapters_data = generate_video_chapters(
+            segments=result["segments"],
+            duration=video.duration
+        )
+
+        video.chapters = chapters_data    
         for segment in result["segments"]:
             text = segment["text"].strip()
 

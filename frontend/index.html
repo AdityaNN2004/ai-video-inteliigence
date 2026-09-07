@@ -153,6 +153,429 @@
                 grid-template-columns: 1fr;
             }
         }
+        .upload-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 12px;
+}
+.transcript-box {
+    margin-bottom: 15px;
+    padding: 20px;
+    background: #111318;
+    border: 1px solid #292d35;
+    border-radius: 12px;
+}
+
+.transcript-header {
+    margin-bottom: 15px;
+}
+
+.transcript-header h2 {
+    margin: 0;
+}
+
+.transcript-segment {
+    display: flex;
+    gap: 15px;
+    padding: 12px;
+    margin-bottom: 6px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.transcript-segment:hover {
+    background: #1f2937;
+}
+
+.transcript-time {
+    min-width: 100px;
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.transcript-text {
+    color: #e5e7eb;
+    line-height: 1.5;
+}
+
+.transcript-segment.active {
+    border-color: #2563eb;
+}
+    .upload-box input {
+        flex: 1;
+        padding: 12px;
+        background: #1b1e24;
+        color: white;
+        border: 1px solid #333;
+        border-radius: 8px;
+    }
+
+    .upload-box button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        background: #16a34a;
+        color: white;
+        cursor: pointer;
+    }
+
+    .upload-box button:hover {
+        background: #15803d;
+    }
+    .library-box {
+    margin-bottom: 15px;
+    padding: 20px;
+    background: #111318;
+    border: 1px solid #292d35;
+    border-radius: 12px;
+}
+.video-status {
+    line-height: 1.5;
+}
+.library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.library-header h2 {
+    margin: 0;
+}
+.similarity-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.similarity-bar {
+    width: 100%;
+    height: 6px;
+    background: #292d35;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.similarity-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: #2563eb;
+}
+
+.no-results {
+    padding: 30px;
+    text-align: center;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 10px;
+}
+
+.no-results-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.no-results-text {
+    color: #9ca3af;
+}
+.library-header button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #374151;
+    color: white;
+    cursor: pointer;
+}
+
+.library-header button:hover {
+    background: #4b5563;
+}
+.topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.topic-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #252a33;
+    border: 1px solid #343a46;
+    font-size: 13px;
+    color: #d1d5db;
+}
+.video-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 8px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.pagination button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #374151;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #4b5563;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.summary-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 10px;
+}
+#qaResult {
+    margin-top: 15px;
+}
+
+.qa-answer {
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.qa-answer h3 {
+    margin-top: 0;
+}
+.summary-header {
+    margin-bottom: 15px;
+}
+
+.summary-header h2 {
+    margin: 0;
+}
+
+.summary-content {
+    line-height: 1.7;
+    color: #d1d5db;
+}
+
+.summary-section {
+    margin-bottom: 18px;
+}
+
+.summary-section h3 {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.summary-section ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.summary-section li {
+    margin-bottom: 6px;
+}
+.pagination span {
+    color: #9ca3af;
+}
+.video-info {
+    min-width: 0;
+}
+
+.video-name {
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.video-status {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.video-item button {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.video-item button:hover {
+    background: #1d4ed8;
+}
+
+.library-empty {
+    color: #9ca3af;
+    margin: 0;
+}
+.details-box {
+    margin-bottom: 15px;
+    padding: 20px;
+    background: #111318;
+    border: 1px solid #292d35;
+    border-radius: 12px;
+}
+
+.details-header {
+    margin-bottom: 15px;
+}
+
+.details-header h2 {
+    margin: 0;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.detail-item {
+    padding: 12px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 8px;
+}
+.chapter-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.chapter-item:hover {
+    transform: translateY(-1px);
+}
+
+.chapter-number {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.chapter-info {
+    flex: 1;
+}
+
+.chapter-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.chapter-time {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+}
+
+.chapter-summary {
+    font-size: 14px;
+    line-height: 1.4;
+}
+.detail-label {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+.detail-value {
+    font-weight: 600;
+    word-break: break-word;
+}
+.search-box button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+@media (max-width: 700px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.ai-sources {
+    margin-top: 20px;
+}
+
+.ai-sources h3 {
+    margin-bottom: 12px;
+}
+
+.ai-source {
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.ai-source:hover {
+    transform: translateY(-1px);
+    border-color: #4f8cff;
+}
+
+.ai-source-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.source-time {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.source-number {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.ai-source p {
+    margin: 0;
+    line-height: 1.5;
+}
     </style>
 </head>
 
@@ -166,20 +589,95 @@
             Search your videos using natural language
         </div>
     </header>
-
-    <div class="search-box">
+    <div class="upload-box">
 
         <input
-            id="searchInput"
-            type="text"
-            placeholder="e.g. you will be the rest"
+            id="videoFile"
+            type="file"
+            accept=".mp4,.mkv,video/mp4,video/x-matroska"
         >
 
-        <button onclick="searchVideos()">
-            🔍 Search
+        <button onclick="uploadVideo()">
+            ⬆️ Upload Video
         </button>
 
     </div>
+<div class="library-box">
+
+    <div class="library-header">
+        <h2>📚 Video Library</h2>
+        <button onclick="loadVideos(currentLibraryPage)">
+    🔄 Refresh
+</button>
+    </div>
+
+    <div id="videoLibrary">
+        <p class="library-empty">Loading videos...</p>
+    </div>
+
+</div>
+<div id="uploadStatus" class="status"></div>
+<div class="details-box" id="videoDetails">
+
+    <div class="details-header">
+        <h2>🎬 Video Details</h2>
+    </div>
+
+    <div id="detailsContent">
+        <p class="library-empty">
+            Select a video to view its details.
+        </p>
+    </div>
+
+</div>
+<div class="summary-box" id="summaryBox">
+    <div class="summary-header">
+        <h2>🧠 AI Summary</h2>
+    </div>
+
+    <div id="summaryContent">
+        <p class="library-empty">
+            Select a video to view its AI summary.
+        </p>
+    </div>
+</div>
+<div class="details-section">
+    <h3>AI Chapters</h3>
+
+    <div id="chaptersContent">
+        <p class="library-empty">
+            No chapters available.
+        </p>
+    </div>
+</div>
+<div class="transcript-box" id="transcriptBox">
+
+    <div class="transcript-header">
+        <h2>📝 Transcript</h2>
+    </div>
+
+    <div id="transcriptContent">
+        <p class="library-empty">
+            Select a video to view its transcript.
+        </p>
+    </div>
+
+</div>
+<div class="search-box">
+
+    <input
+        id="questionInput"
+        type="text"
+        placeholder="Ask something about this video..."
+    >
+
+    <button onclick="askVideoQuestion()">
+        🤖 Ask AI
+    </button>
+
+</div>
+
+<div id="qaResult"></div>
 
     <div class="content">
 
@@ -231,22 +729,40 @@
 <script>
 
 const API_BASE_URL = "http://localhost:8000";
-
+let currentVideoId = null;
+let currentLibraryPage = 1;
+let isSearching = false;
 const videoPlayer = document.getElementById("videoPlayer");
 const resultsContainer = document.getElementById("results");
 const statusElement = document.getElementById("status");
 const currentVideoElement = document.getElementById("currentVideo");
 
+function formatTime(seconds) {
+    const totalSeconds = Math.floor(seconds);
+    const minutes = Math.floor(totalSeconds / 60);
+    const remainingSeconds = totalSeconds % 60;
 
+    return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
 async function searchVideos() {
+
+    if (isSearching) return;
 
     const query = document
         .getElementById("searchInput")
         .value
         .trim();
 
-    if (!query) {
-        return;
+    if (!query) return;
+
+    isSearching = true;
+
+    const searchButton =
+        document.querySelector(".search-box button");
+
+    if (searchButton) {
+        searchButton.disabled = true;
+        searchButton.textContent = "⏳ Searching...";
     }
 
     statusElement.textContent = "Searching...";
@@ -266,8 +782,13 @@ async function searchVideos() {
 
         displayResults(data.results);
 
-        statusElement.textContent =
-            `${data.results.length} result(s) found`;
+        if (data.results.length > 0) {
+            statusElement.textContent =
+                `${data.results.length} result(s) found`;
+        } else {
+            statusElement.textContent =
+                "No matching results found";
+        }
 
     } catch (error) {
 
@@ -276,23 +797,107 @@ async function searchVideos() {
         statusElement.textContent =
             "Failed to search videos.";
 
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-title">
+                    Search failed
+                </div>
+
+                <div class="no-results-text">
+                    Please check that the backend is running
+                    and try again.
+                </div>
+            </div>
+        `;
+
+    } finally {
+
+        isSearching = false;
+
+        if (searchButton) {
+            searchButton.disabled = false;
+            searchButton.textContent = "🔍 Search";
+        }
     }
 }
 
+function displayChapters(chapters) {
+    const chaptersContent =
+        document.getElementById("chaptersContent");
 
+    if (!chapters || chapters.length === 0) {
+        chaptersContent.innerHTML = `
+            <p class="library-empty">
+                No chapters available.
+            </p>
+        `;
+        return;
+    }
+
+    chaptersContent.innerHTML = chapters
+        .map((chapter, index) => `
+            <div
+                class="chapter-item"
+                onclick="playChapter(${chapter.start_time})"
+            >
+                <div class="chapter-number">
+                    ${index + 1}
+                </div>
+
+                <div class="chapter-info">
+                    <div class="chapter-title">
+                        ${escapeHtml(chapter.title)}
+                    </div>
+
+                    <div class="chapter-time">
+                        ${formatTimestamp(chapter.start_time)}
+                        -
+                        ${formatTimestamp(chapter.end_time)}
+                    </div>
+
+                    <div class="chapter-summary">
+                        ${escapeHtml(chapter.summary)}
+                    </div>
+                </div>
+            </div>
+        `)
+        .join("");
+}
+function playChapter(startTime) {
+    videoPlayer.currentTime = startTime;
+
+    videoPlayer.play().catch(error => {
+        console.log("Playback prevented:", error);
+    });
+}
 function displayResults(results) {
 
     resultsContainer.innerHTML = "";
 
     if (results.length === 0) {
 
-        resultsContainer.innerHTML =
-            "<p>No results found.</p>";
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-title">
+                    No strong matches found
+                </div>
+
+                <div class="no-results-text">
+                    Try using different words or a broader question.
+                </div>
+            </div>
+        `;
 
         return;
     }
 
-    results.forEach((result, index) => {
+    results.forEach((result) => {
+
+        const percentage =
+            result.similarity * 100;
+
+        const relevance =
+            getRelevanceLabel(result.similarity);
 
         const resultElement =
             document.createElement("div");
@@ -316,8 +921,29 @@ function displayResults(results) {
             </div>
 
             <div class="similarity">
-                Similarity:
-                ${(result.similarity * 100).toFixed(1)}%
+
+                <div class="similarity-header">
+
+                    <span>
+                        Relevance
+                    </span>
+
+                    <span>
+                        ${percentage.toFixed(1)}%
+                        — ${relevance}
+                    </span>
+
+                </div>
+
+                <div class="similarity-bar">
+
+                    <div
+                        class="similarity-fill"
+                        style="width: ${percentage}%">
+                    </div>
+
+                </div>
+
             </div>
         `;
 
@@ -337,7 +963,6 @@ function displayResults(results) {
         resultsContainer.appendChild(resultElement);
     });
 }
-
 
 function playAtTimestamp(result) {
 
@@ -361,17 +986,696 @@ function playAtTimestamp(result) {
     );
 }
 
+const searchInput = document.getElementById("searchInput");
 
-document
-    .getElementById("searchInput")
-    .addEventListener("keydown", function(event) {
-
+if (searchInput) {
+    searchInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
+            event.preventDefault();
             searchVideos();
         }
-
     });
+}
 
+function displayAISources(sources) {
+    if (!sources || sources.length === 0) {
+        return "";
+    }
+
+    return `
+        <div class="ai-sources">
+            <h3>📚 Video Sources</h3>
+
+            ${sources.map((source, index) => `
+                <div
+                    class="ai-source"
+                    onclick="playAtTimestamp(${source.start_time})"
+                >
+                    <div class="ai-source-header">
+                        <button
+                            class="source-time"
+                            onclick="event.stopPropagation(); playAtTimestamp(${source.start_time})"
+                        >
+                            ▶ ${formatTime(source.start_time)}
+                        </button>
+
+                        <span class="source-number">
+                            Source ${index + 1}
+                        </span>
+                    </div>
+
+                    <p>
+                        ${escapeHtml(source.text)}
+                    </p>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+async function uploadVideo() {
+
+    const fileInput = document.getElementById("videoFile");
+    const uploadStatus = document.getElementById("uploadStatus");
+
+    if (!fileInput.files.length) {
+        uploadStatus.textContent = "Please select a video.";
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    uploadStatus.textContent = "Uploading...";
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos/upload`,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Upload failed");
+        }
+
+        uploadStatus.textContent =
+            `Upload successful. Processing: ${data.filename}`;
+
+        fileInput.value = "";
+
+        // Start checking processing status
+        pollVideoStatus(data.video_id, data.filename);
+
+    } catch (error) {
+
+        console.error(error);
+
+        uploadStatus.textContent =
+            `Upload failed: ${error.message}`;
+    }
+}
+async function loadTranscript(videoId) {
+
+    const transcriptContent =
+        document.getElementById("transcriptContent");
+
+    transcriptContent.innerHTML = `
+        <p class="library-empty">
+            Loading transcript...
+        </p>
+    `;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos/${videoId}/transcript`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load transcript");
+        }
+
+        const data = await response.json();
+
+        if (!data.segments || data.segments.length === 0) {
+
+            transcriptContent.innerHTML = `
+                <p class="library-empty">
+                    Transcript not available yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        transcriptContent.innerHTML = "";
+
+        data.segments.forEach((segment, index) => {
+
+            const element =
+                document.createElement("div");
+
+            element.className = "transcript-segment";
+
+            element.innerHTML = `
+                <div class="transcript-time">
+                    ${formatDuration(segment.start_time)}
+                </div>
+
+                <div class="transcript-text">
+                    ${segment.text}
+                </div>
+            `;
+
+            element.onclick = () => {
+
+                document
+                    .querySelectorAll(".transcript-segment")
+                    .forEach(item =>
+                        item.classList.remove("active")
+                    );
+
+                element.classList.add("active");
+
+                videoPlayer.currentTime =
+                    segment.start_time;
+
+                videoPlayer.play().catch(error => {
+                    console.log(
+                        "Autoplay prevented:",
+                        error
+                    );
+                });
+            };
+
+            transcriptContent.appendChild(element);
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        transcriptContent.innerHTML = `
+            <p class="library-empty">
+                Failed to load transcript.
+            </p>
+        `;
+    }
+}
+function displayVideoSummary(summaryData) {
+
+    const summaryContent =
+        document.getElementById("summaryContent");
+
+    if (!summaryData) {
+        summaryContent.innerHTML = `
+            <p class="library-empty">
+                AI summary is not available for this video.
+            </p>
+        `;
+        return;
+    }
+
+    let html = "";
+
+    // Main summary
+    if (summaryData.summary) {
+        html += `
+            <div class="summary-section">
+                <h3>Overview</h3>
+                <p>${summaryData.summary}</p>
+            </div>
+        `;
+    }
+
+    // Key points
+    if (
+        summaryData.key_points &&
+        summaryData.key_points.length > 0
+    ) {
+        html += `
+            <div class="summary-section">
+                <h3>🔑 Key Points</h3>
+                <ul>
+                    ${summaryData.key_points
+                        .map(point => `<li>${point}</li>`)
+                        .join("")}
+                </ul>
+            </div>
+        `;
+    }
+
+    // Topics
+    if (
+        summaryData.topics &&
+        summaryData.topics.length > 0
+    ) {
+        html += `
+            <div class="summary-section">
+                <h3>🏷️ Topics</h3>
+
+                <div class="topic-list">
+                    ${summaryData.topics
+                        .map(topic => `
+                            <span class="topic-tag">
+                                ${topic}
+                            </span>
+                        `)
+                        .join("")}
+                </div>
+            </div>
+        `;
+    }
+
+    if (!html) {
+        summaryContent.innerHTML = `
+            <p class="library-empty">
+                AI summary is not available for this video.
+            </p>
+        `;
+        return;
+    }
+
+    summaryContent.innerHTML = html;
+}
+function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = value ?? "";
+    return div.innerHTML;
+}
+function formatTimestamp(seconds) {
+    if (seconds == null || isNaN(seconds)) {
+        return "00:00";
+    }
+
+    seconds = Math.floor(Number(seconds));
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (hours > 0) {
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+async function pollVideoStatus(videoId, filename) {
+
+    const uploadStatus = document.getElementById("uploadStatus");
+
+    const interval = setInterval(async () => {
+
+        try {
+
+            const response = await fetch(
+                `${API_BASE_URL}/api/videos/${videoId}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to get video status");
+            }
+
+            const data = await response.json();
+
+            console.log("Video status:", data.status);
+
+            if (data.status === "processing") {
+
+                uploadStatus.textContent =
+                    `⏳ Processing "${filename}"...`;
+
+            } else if (data.status === "completed") {
+
+                clearInterval(interval);
+
+                uploadStatus.textContent =
+                    `✅ Processing completed: ${filename}`;
+
+            } else if (data.status === "failed") {
+
+                clearInterval(interval);
+
+                uploadStatus.textContent =
+                    `❌ Processing failed: ${filename}`;
+
+            }
+
+        } catch (error) {
+
+            console.error("Status polling error:", error);
+
+            clearInterval(interval);
+
+            uploadStatus.textContent =
+                "Could not check processing status.";
+        }
+
+    }, 3000);
+}
+async function loadVideos(page = 1) {
+    currentLibraryPage = page;
+    const library = document.getElementById("videoLibrary");
+
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    library.innerHTML = `
+        <p class="library-empty">
+            Loading videos...
+        </p>
+    `;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos?skip=${skip}&limit=${limit}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load videos");
+        }
+
+        const videos = await response.json();
+
+        if (videos.length === 0) {
+
+            library.innerHTML = `
+                <p class="library-empty">
+                    No videos found.
+                </p>
+            `;
+
+            return;
+        }
+
+        library.innerHTML = "";
+
+        videos.forEach(video => {
+
+            const metadata = video.metadata;
+
+            const item = document.createElement("div");
+
+            item.className = "video-item";
+
+            item.innerHTML = `
+                <div class="video-info">
+
+                    <div class="video-name">
+                        ${video.filename}
+                    </div>
+
+                    <div class="video-status">
+                        ⏱ ${formatDuration(metadata.duration)}
+                        &nbsp; • &nbsp;
+                        🖥 ${metadata.width}×${metadata.height}
+                        &nbsp; • &nbsp;
+                        ⚙️ ${video.status}
+                    </div>
+
+                </div>
+
+                <button onclick="openVideo('${video.video_id}')">
+                    ▶ Open
+                </button>
+            `;
+
+            library.appendChild(item);
+        });
+
+        addPaginationButtons(page, videos.length);
+
+    } catch (error) {
+
+        console.error(error);
+
+        library.innerHTML = `
+            <p class="library-empty">
+                Failed to load videos.
+            </p>
+        `;
+    }
+}
+function addPaginationButtons(page, videoCount) {
+
+    const library = document.getElementById("videoLibrary");
+
+    const pagination = document.createElement("div");
+
+    pagination.className = "pagination";
+
+    pagination.innerHTML = `
+
+        <button
+            ${page === 1 ? "disabled" : ""}
+            onclick="loadVideos(${page - 1})">
+            ← Previous
+        </button>
+
+        <span>
+            Page ${page}
+        </span>
+
+        <button
+            ${videoCount < 10 ? "disabled" : ""}
+            onclick="loadVideos(${page + 1})">
+            Next →
+        </button>
+
+    `;
+
+    library.appendChild(pagination);
+}
+function formatDuration(seconds) {
+
+    seconds = Math.floor(seconds);
+
+    const hours = Math.floor(seconds / 3600);
+
+    const minutes = Math.floor(
+        (seconds % 3600) / 60
+    );
+
+    const remainingSeconds = seconds % 60;
+
+    if (hours > 0) {
+
+        return `${hours}:${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+
+    }
+
+    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+async function askVideoQuestion() {
+
+    const input = document.getElementById("questionInput");
+    const result = document.getElementById("qaResult");
+
+    const question = input.value.trim();
+
+    if (!question) {
+        result.innerHTML = `
+            <p class="library-empty">
+                Please enter a question.
+            </p>
+        `;
+        return;
+    }
+
+    if (!currentVideoId) {
+        result.innerHTML = `
+            <p class="library-empty">
+                Please open a video first.
+            </p>
+        `;
+        return;
+    }
+
+    result.innerHTML = `
+        <p class="library-empty">
+            🤖 AI is thinking...
+        </p>
+    `;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos/${currentVideoId}/ask`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to get answer");
+        }
+
+        const data = await response.json();
+
+        result.innerHTML = `
+            <div class="qa-answer">
+
+                <h3>🤖 AI Answer</h3>
+
+                <p>
+                    ${escapeHtml(data.answer)}
+                </p>
+
+                ${displayAISources(data.sources)}
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error("Q&A error:", error);
+
+        result.innerHTML = `
+            <p class="library-empty">
+                Failed to get an answer.
+            </p>
+        `;
+    }
+}
+async function openVideo(videoId) {
+    currentVideoId = videoId;
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/videos/${videoId}/details`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load video details");
+        }
+
+        const video = await response.json();
+
+        videoPlayer.src =
+            `${API_BASE_URL}/api/videos/${videoId}/file`;
+
+        currentVideoElement.textContent =
+            video.filename;
+
+        displayVideoDetails(video);
+        displayVideoSummary(video.summary);
+        displayChapters(video.chapters);
+        loadTranscript(videoId);
+
+        videoPlayer.load();
+
+        videoPlayer.play().catch(error => {
+            console.log("Autoplay prevented:", error);
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("detailsContent").innerHTML = `
+            <p class="library-empty">
+                Failed to load video details.
+            </p>
+        `;
+    }
+}
+function displayVideoDetails(video) {
+
+    const metadata = video.metadata;
+
+    const detailsContent =
+        document.getElementById("detailsContent");
+
+    detailsContent.innerHTML = `
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <div class="detail-label">Filename</div>
+                <div class="detail-value">
+                    ${video.filename}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Status</div>
+                <div class="detail-value">
+                    ${video.status}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Duration</div>
+                <div class="detail-value">
+                    ${formatDuration(metadata.duration)}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Resolution</div>
+                <div class="detail-value">
+                    ${metadata.width} × ${metadata.height}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">FPS</div>
+                <div class="detail-value">
+                    ${metadata.fps}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Video Codec</div>
+                <div class="detail-value">
+                    ${metadata.video_codec}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Audio</div>
+                <div class="detail-value">
+                    ${metadata.has_audio ? "Yes" : "No"}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Audio Codec</div>
+                <div class="detail-value">
+                    ${metadata.audio_codec || "N/A"}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Language</div>
+                <div class="detail-value">
+                    ${video.language || "Not detected"}
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Transcript</div>
+                <div class="detail-value">
+                    ${video.transcript ? "Available" : "Not available"}
+                </div>
+            </div>
+
+        </div>
+    `;
+}
+function getRelevanceLabel(similarity) {
+
+    if (similarity >= 0.75) {
+        return "Strong match";
+    }
+
+    if (similarity >= 0.50) {
+        return "Good match";
+    }
+
+    return "Possible match";
+}
+
+loadVideos();
+
+setInterval(() => {
+    loadVideos(currentLibraryPage);
+}, 5000);
 </script>
 
 </body>
